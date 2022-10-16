@@ -42,6 +42,7 @@ def petitenpretty_ingre(product_url):
             if not flag:
                 break
 
+
         return ingre.strip()
 
     def extract_model(soup):
@@ -57,6 +58,11 @@ def petitenpretty_ingre(product_url):
                 if p.strip() != "":
                     if p[0] != ";":
                         p = ";" + p
+                    match = re.findall(r'\*.*$', p.strip())
+                    if match:
+                        m = match[0]
+                        if "contains" in m.lower():
+                            p = re.sub(r'\*.*$', "", p.strip())
                     full_ingre += p
             return normalize_paragraph(full_ingre).replace(":;:", ":")
         return ""
@@ -97,19 +103,19 @@ def petitenpretty_ingre(product_url):
 
     return [product_url, extract_full_ingre(soup), 'N/A']
 
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/fully-feathered-kajal-eyeliner"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/my-stellar-micellar-makeup-remover-wipes"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/10k-shine-lip-gloss"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/gloss-balm-glossy-lip-balm"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/clearly-cute-makeup-gift-set"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/featherlight-clear-brow-gel"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/fully-feathered-volumizing-mascara"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/9021-bungalow-eye-cheek-palette"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/sparkly-ever-after"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/get-up-and-glow-travel-skincare-set"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/9021-glow-peel-off-glitter-face-mask"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/deck-the-palms-gen-glitter-duo"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/4-0-glow-back-to-school-makeup-set"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/glo-balm-glossy-lip-balm-gift-set"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/my-stellar-micellar-makeup-remover-wipes"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/fully-feathered-kajal-eyeliner"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/my-stellar-micellar-makeup-remover-wipes"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/10k-shine-lip-gloss"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/gloss-balm-glossy-lip-balm"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/clearly-cute-makeup-gift-set"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/featherlight-clear-brow-gel"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/fully-feathered-volumizing-mascara"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/9021-bungalow-eye-cheek-palette"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/sparkly-ever-after"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/get-up-and-glow-travel-skincare-set"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/9021-glow-peel-off-glitter-face-mask"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/deck-the-palms-gen-glitter-duo"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/4-0-glow-back-to-school-makeup-set"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/glo-balm-glossy-lip-balm-gift-set"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/my-stellar-micellar-makeup-remover-wipes"))
 print(petitenpretty_ingre("https://www.petitenpretty.com/products/so-much-yum-makeup-set"))

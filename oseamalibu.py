@@ -73,10 +73,13 @@ def oseamalibu_ingre(product_url):
                             product_name = p.find('b')
                             product_name.extract()
                             full_ingre += ";" + product_name.text + ": " + p.text.strip()
+                        elif p.find('strong') is not None:
+                            product_name = p.find('strong')
+                            product_name.extract()
+                            full_ingre += ";" + product_name.text + ": " + p.text.strip()
                         else:
                             full_ingre += p.text.strip()
                     else:
-
                         para_list = str(p).split('<br/>')
 
                         for p in para_list:
@@ -110,7 +113,8 @@ def oseamalibu_ingre(product_url):
 # print(oseamalibu_ingre("https://oseamalibu.com/products/seaglow-overnight-serum"))
 # print(oseamalibu_ingre("https://oseamalibu.com/products/gua-sha-sculptor"))
 # print(oseamalibu_ingre("https://oseamalibu.com/products/gua-sha-glow-duo"))
-print(oseamalibu_ingre("https://oseamalibu.com/products/advanced-protection-cream"))
-print(oseamalibu_ingre("https://oseamalibu.com/products/copy-of-anti-aging-ritual"))
-print(oseamalibu_ingre("https://oseamalibu.com/collections/skin-brightening/?page=1&sort_by=manual"))
+# print(oseamalibu_ingre("https://oseamalibu.com/products/advanced-protection-cream"))
+# print(oseamalibu_ingre("https://oseamalibu.com/products/copy-of-anti-aging-ritual"))
+# print(oseamalibu_ingre("https://oseamalibu.com/collections/skin-brightening/?page=1&sort_by=manual"))
 
+print(oseamalibu_ingre('https://oseamalibu.com/products/miracle-moisture-trio'))

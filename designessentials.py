@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import unicodedata
 import re
 import ast
 
@@ -33,7 +34,7 @@ def designessentials_ingre(product_url):
 
             if len(divs) <= 1:
                 if divs[0].find('ul') is None:
-                    return divs[0].text.strip().title()
+                    return divs[0].text.strip().title().replace("Ingredients: ", "")
                 else:
                     set_flag = True
 
@@ -45,7 +46,7 @@ def designessentials_ingre(product_url):
             if not set_flag:
                 for div in divs:
                     if div.text.strip() != "":
-                        return " ".join(div.text.strip().title().split())
+                        return " ".join(div.text.strip().title().split()).replace("Ingredients: ", "")
             else:
                 full_ingre = ""
                 for div in divs:
@@ -64,7 +65,7 @@ def designessentials_ingre(product_url):
                             a_ele = div.find('a')
                             full_ingre += ";" + product_title + ":" + \
                                           designessentials_ingre(a_ele.get('href'))[1]
-                return " ".join(full_ingre[1:].strip().split())
+                return " ".join(full_ingre[1:].strip().split()).replace("Ingredients: ", "")
 
         except:
             return 'N/A'
@@ -75,24 +76,25 @@ def designessentials_ingre(product_url):
     soup = bs(response.content,
               'html.parser')  # Creating the soup using the beautifulsoup library and the response received from the above request
 
-    return [product_url, extract_ingre(soup), key_ingre(soup)]
+    return [product_url, unicodedata.normalize('NFKC', extract_ingre(soup)), unicodedata.normalize('NFKC', key_ingre(soup))]
 
 
 ############ Individual Products
 # print(designessentials_ingre("https://designessentials.com/sleek-edge-control/"))
 # print(designessentials_ingre("https://designessentials.com/bamboo-silk-hco-leave-in-conditioner/"))
 # print(designessentials_ingre("https://designessentials.com/wash-day-deep-moisture-masque/"))
-print(designessentials_ingre("https://designessentials.com/sleek-max-edge-control/"))
-print(designessentials_ingre("https://designessentials.com/phusion-satin-hair-wrap-plus-sleep-mask/"))
-print(designessentials_ingre("https://designessentials.com/volumizing-shampoo-step-1/"))
-print(designessentials_ingre("https://designessentials.com/agave-lavender-detangling-conditioner/"))
-print(designessentials_ingre("https://designessentials.com/twist-set-setting-lotion/"))
-print(designessentials_ingre("https://designessentials.com/scalp-skin-care-anti-itch-tension-relief/"))
-print(designessentials_ingre("https://designessentials.com/scalp-skin-care-detoxifying-tonic/"))
-print(designessentials_ingre("https://designessentials.com/formations-finishing-spritz/"))
+# print(designessentials_ingre("https://designessentials.com/sleek-max-edge-control/"))
+# print(designessentials_ingre("https://designessentials.com/phusion-satin-hair-wrap-plus-sleep-mask/"))
+# print(designessentials_ingre("https://designessentials.com/volumizing-shampoo-step-1/"))
+# print(designessentials_ingre("https://designessentials.com/agave-lavender-detangling-conditioner/"))
+# print(designessentials_ingre("https://designessentials.com/twist-set-setting-lotion/"))
+# print(designessentials_ingre("https://designessentials.com/scalp-skin-care-anti-itch-tension-relief/"))
+# print(designessentials_ingre("https://designessentials.com/scalp-skin-care-detoxifying-tonic/"))
+# print(designessentials_ingre("https://designessentials.com/formations-finishing-spritz/"))
+print(designessentials_ingre("https://designessentials.com/honey-curl-forming-custard-12oz/"))
 
 ########### SETS ######################
-print(designessentials_ingre("https://designessentials.com/agave-lavender-silk-press-collections/"))
-print(designessentials_ingre("https://designessentials.com/protective-style-maintenance-pack/"))
-print(designessentials_ingre("https://designessentials.com/kid-easy-as-1-2-3-style-pack/"))
-print(designessentials_ingre("https://designessentials.com/youve-got-style-bundle/"))
+# print(designessentials_ingre("https://designessentials.com/agave-lavender-silk-press-collections/"))
+# print(designessentials_ingre("https://designessentials.com/protective-style-maintenance-pack/"))
+# print(designessentials_ingre("https://designessentials.com/kid-easy-as-1-2-3-style-pack/"))
+# print(designessentials_ingre("https://designessentials.com/youve-got-style-bundle/"))
