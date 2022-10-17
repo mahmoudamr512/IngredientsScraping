@@ -80,7 +80,13 @@ def petitenpretty_ingre(product_url):
                     if len(all_paragraphs) <= 1 and div.find('strong') is None:
                         if len(div.find('p').text) <= 7 or "made of" in div.find('p').text.lower():
                             return 'N/A'
-                        return normalize_paragraph(div.find('p').text)
+                        text = div.find('p').text
+                        match = re.findall(r'\*.*', text.strip())
+                        if match:
+                            m = match[0]
+                            if "contains" in m.lower():
+                                text = re.sub(r'\*.*$', "", text.strip())
+                        return normalize_paragraph(text)
                     else:
                         full_ingre = ""
                         for p in all_paragraphs:
@@ -125,4 +131,5 @@ def petitenpretty_ingre(product_url):
 # print(petitenpretty_ingre("https://www.petitenpretty.com/products/glo-balm-glossy-lip-balm-gift-set"))
 # print(petitenpretty_ingre("https://www.petitenpretty.com/products/my-stellar-micellar-makeup-remover-wipes"))
 # print(petitenpretty_ingre("https://www.petitenpretty.com/products/so-much-yum-makeup-set"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/9021-bungalow-eye-cheek-palette"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/9021-bungalow-eye-cheek-palette"))
+print(petitenpretty_ingre("https://www.petitenpretty.com/products/sparkly-ever-after"))
