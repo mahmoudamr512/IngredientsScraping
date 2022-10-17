@@ -58,7 +58,7 @@ def petitenpretty_ingre(product_url):
                 if p.strip() != "":
                     if p[0] != ";":
                         p = ";" + p
-                    match = re.findall(r'\*.*$', p.strip())
+                    match = re.findall(r'\*.*', p.strip())
                     if match:
                         m = match[0]
                         if "contains" in m.lower():
@@ -84,7 +84,13 @@ def petitenpretty_ingre(product_url):
                     else:
                         full_ingre = ""
                         for p in all_paragraphs:
-                            full_ingre += ";" + p.text
+                            text = p.text
+                            match = re.findall(r'\*.*', text.strip())
+                            if match:
+                                m = match[0]
+                                if "contains" in m.lower():
+                                    text = re.sub(r'\*.*$', "", text.strip())
+                            full_ingre += ";" + text
                         return normalize_paragraph(full_ingre)
 
             return 'N/A'
@@ -101,7 +107,7 @@ def petitenpretty_ingre(product_url):
               'html.parser')  # Creating the soup using the beautifulsoup library and the response received from the above request
 
 
-    return [product_url, extract_full_ingre(soup), 'N/A']
+    return [product_url, extract_full_ingre(soup).replace(": :", ":"), 'N/A']
 
 # print(petitenpretty_ingre("https://www.petitenpretty.com/products/fully-feathered-kajal-eyeliner"))
 # print(petitenpretty_ingre("https://www.petitenpretty.com/products/my-stellar-micellar-makeup-remover-wipes"))
@@ -118,4 +124,5 @@ def petitenpretty_ingre(product_url):
 # print(petitenpretty_ingre("https://www.petitenpretty.com/products/4-0-glow-back-to-school-makeup-set"))
 # print(petitenpretty_ingre("https://www.petitenpretty.com/products/glo-balm-glossy-lip-balm-gift-set"))
 # print(petitenpretty_ingre("https://www.petitenpretty.com/products/my-stellar-micellar-makeup-remover-wipes"))
-print(petitenpretty_ingre("https://www.petitenpretty.com/products/so-much-yum-makeup-set"))
+# print(petitenpretty_ingre("https://www.petitenpretty.com/products/so-much-yum-makeup-set"))
+print(petitenpretty_ingre("https://www.petitenpretty.com/products/9021-bungalow-eye-cheek-palette"))
